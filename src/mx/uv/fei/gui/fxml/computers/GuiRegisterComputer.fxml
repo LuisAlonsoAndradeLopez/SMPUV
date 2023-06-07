@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.GuiRegisterComputerController">
+   <children>
+      <Text layoutX="273.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar Computadora">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="33.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procesador:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="cpuComboBox" layoutX="128.0" layoutY="79.0" prefHeight="24.0" prefWidth="250.0" promptText="--Seleccionar Procesador--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Text layoutX="33.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Memoria:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="ramMemoryComboBox" layoutX="107.0" layoutY="119.0" prefHeight="24.0" prefWidth="270.0" promptText="--Seleccionar Memoria--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Text layoutX="33.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Disco:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="diskComboBox" layoutX="84.0" layoutY="159.0" prefHeight="24.0" prefWidth="293.0" promptText="--Seleccionar Disco--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Text layoutX="33.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjeta Grafica:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="gpuComboBox" layoutX="156.0" layoutY="199.0" prefHeight="24.0" prefWidth="221.0" promptText="--Seleccionar GPU--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Text layoutX="34.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="markComboBox" layoutX="91.0" layoutY="239.0" prefHeight="24.0" prefWidth="286.0" promptText="--Seleccionar Marca--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <Text layoutX="419.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuente de Poder:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="powerSourceComboBox" layoutX="550.0" layoutY="82.0" prefHeight="24.0" prefWidth="212.0" promptText="--Seleccionar Fuente--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Text layoutX="419.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo: ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="typeComboBox" layoutX="461.0" layoutY="121.0" prefHeight="24.0" prefWidth="302.0" promptText="--Seleccionar Tipo--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <Text layoutX="419.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de Serie:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TextField fx:id="serialNumberTextField" layoutX="555.0" layoutY="160.0" prefHeight="24.0" prefWidth="208.0" />
+      <Text layoutX="419.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Adquisicion: ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="adquisitionDateDatePicker" editable="false" layoutX="588.0" layoutY="202.0" prefHeight="24.0" prefWidth="175.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></DatePicker>
+      <Text layoutX="419.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado: ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="statusComboBox" layoutX="484.0" layoutY="240.0" prefHeight="24.0" prefWidth="279.0" promptText="--Seleccionar Estado--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <Text layoutX="196.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjeta Madre:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="motherBoardComboBox" layoutX="311.0" layoutY="281.0" prefHeight="24.0" prefWidth="250.0" promptText="--Seleccionar Tarjeta Madre--">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Button fx:id="registerButton" layoutX="313.0" layoutY="326.0" mnemonicParsing="false" onAction="#registerButtonController" prefHeight="48.0" prefWidth="128.0" text="Registrar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+</Pane>
