@@ -9,8 +9,13 @@ import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public interface IComputerDAO {
     public void addComputerToDatabase(Computer computer) throws DataWritingException, ConstraintViolationException;
-    public void modifyComputerDataFromDatabase(Computer newComputerData, Computer originalComputerData) throws DataWritingException, ConstraintViolationException;
+
+    public void modifyComputerDataFromDatabase(Computer newComputerData, Computer originalComputerData)
+            throws DataWritingException, ConstraintViolationException;
+
     public ArrayList<Computer> getComputersFromDatabase() throws DataRetrievalException;
+
     public ArrayList<Computer> getSpecifiedComputersFromDatabase(String serialNumber) throws DataRetrievalException;
+
     public Computer getComputerFromDatabase(String serialNumber) throws DataRetrievalException;
 }

@@ -19,18 +19,17 @@ import mx.uv.fei.logic.exceptions.DataWritingException;
 public class ComputerDAO implements IComputerDAO {
     private final DataBaseManager dataBaseManager;
 
-    public ComputerDAO(){
+    public ComputerDAO() {
         dataBaseManager = new DataBaseManager();
     }
 
     @Override
     public void addComputerToDatabase(Computer computer) throws DataWritingException, ConstraintViolationException {
-        try{
-            String query = 
-                "INSERT INTO EquiposComputo (cpu, ram, disco, gpu, IdMarca, fuentePoder, motherboard, NumSerie, fechaAdquisición, estado, tipo)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = 
-                dataBaseManager.getConnection().prepareStatement(query);
+        try {
+            String query = "INSERT INTO EquiposComputo (cpu, ram, disco, gpu, IdMarca, fuentePoder, motherboard, NumSerie, fechaAdquisición, estado, tipo)"
+                    +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = dataBaseManager.getConnection().prepareStatement(query);
             preparedStatement.setString(1, computer.getCpu());
             preparedStatement.setString(2, computer.getRamMemory());
             preparedStatement.setString(3, computer.getDisk());
@@ -43,20 +42,22 @@ public class ComputerDAO implements IComputerDAO {
             preparedStatement.setString(10, computer.getStatus());
             preparedStatement.setString(11, computer.getType());
             preparedStatement.executeUpdate();
-        }catch(SQLIntegrityConstraintViolationException e){
+        } catch (SQLIntegrityConstraintViolationException e) {
             throw new ConstraintViolationException("Número de serie ya utilizado, por favor introduzca otro");
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DataWritingException("Error al agregar computadora. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } finally {
             dataBaseManager.closeConnection();
         }
     }
 
     @Override
-    public void modifyComputerDataFromDatabase(Computer newComputerData, Computer originalComputerData) throws DataWritingException, ConstraintViolationException {
-        try{
-            String query = "UPDATE EquiposComputo SET cpu = ?, ram = ?, disco = ?, gpu = ?, IdMarca = ?, fuentePoder = ?, " + 
-                           "motherboard = ?, NumSerie = ?, fechaAdquisición = ?, estado = ?, tipo = ? WHERE NumSerie = ?";
+    public void modifyComputerDataFromDatabase(Computer newComputerData, Computer originalComputerData)
+            throws DataWritingException, ConstraintViolationException {
+        try {
+            String query = "UPDATE EquiposComputo SET cpu = ?, ram = ?, disco = ?, gpu = ?, IdMarca = ?, fuentePoder = ?, "
+                    +
+                    "motherboard = ?, NumSerie = ?, fechaAdquisición = ?, estado = ?, tipo = ? WHERE NumSerie = ?";
             PreparedStatement preparedStatement = dataBaseManager.getConnection().prepareStatement(query);
             preparedStatement.setString(1, newComputerData.getCpu());
             preparedStatement.setString(2, newComputerData.getRamMemory());
@@ -71,11 +72,12 @@ public class ComputerDAO implements IComputerDAO {
             preparedStatement.setString(11, newComputerData.getType());
             preparedStatement.setString(12, originalComputerData.getSerialNumber());
             preparedStatement.executeUpdate();
-        }catch(SQLIntegrityConstraintViolationException e){
+        } catch (SQLIntegrityConstraintViolationException e) {
             throw new ConstraintViolationException("Número de serie ya utilizado, por favor introduzca otro");
-        }catch(SQLException e){
-            throw new DataWritingException("Error al modificar computadora. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } catch (SQLException e) {
+            throw new DataWritingException(
+                    "Error al modificar computadora. Verifique su conexion e intentelo de nuevo");
+        } finally {
             dataBaseManager.closeConnection();
         }
     }
@@ -84,11 +86,11 @@ public class ComputerDAO implements IComputerDAO {
     public ArrayList<Computer> getComputersFromDatabase() throws DataRetrievalException {
         ArrayList<Computer> computers = new ArrayList<>();
 
-        try{
+        try {
             Statement statement = dataBaseManager.getConnection().createStatement();
             String query = "SELECT * FROM EquiposComputo";
             ResultSet resultSet = statement.executeQuery(query);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Computer computer = new Computer();
                 computer.setCpu(resultSet.getString("cpu"));
                 computer.setRamMemory(resultSet.getString("ram"));
@@ -108,9 +110,10 @@ public class ComputerDAO implements IComputerDAO {
 
             resultSet.close();
             dataBaseManager.getConnection().close();
-        }catch(SQLException e){
-            throw new DataRetrievalException("Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } catch (SQLException e) {
+            throw new DataRetrievalException(
+                    "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
+        } finally {
             dataBaseManager.closeConnection();
         }
 
@@ -121,12 +124,12 @@ public class ComputerDAO implements IComputerDAO {
     public ArrayList<Computer> getSpecifiedComputersFromDatabase(String serialNumber) throws DataRetrievalException {
         ArrayList<Computer> computers = new ArrayList<>();
 
-        try{
+        try {
             String query = "SELECT * FROM EquiposComputo WHERE NumSerie LIKE ?";
             PreparedStatement preparedStatement = dataBaseManager.getConnection().prepareStatement(query);
             preparedStatement.setString(1, serialNumber + '%');
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Computer computer = new Computer();
                 computer.setCpu(resultSet.getString("cpu"));
                 computer.setRamMemory(resultSet.getString("ram"));
@@ -145,9 +148,10 @@ public class ComputerDAO implements IComputerDAO {
             }
             resultSet.close();
             dataBaseManager.getConnection().close();
-        }catch(SQLException e){
-            throw new DataRetrievalException("Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } catch (SQLException e) {
+            throw new DataRetrievalException(
+                    "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
+        } finally {
             dataBaseManager.closeConnection();
         }
 
@@ -158,12 +162,12 @@ public class ComputerDAO implements IComputerDAO {
     public Computer getComputerFromDatabase(String serialNumber) throws DataRetrievalException {
         Computer computer = new Computer();
 
-        try{
+        try {
             String query = "SELECT * FROM EquiposComputo WHERE NumSerie = ?";
             PreparedStatement preparedStatement = dataBaseManager.getConnection().prepareStatement(query);
             preparedStatement.setString(1, serialNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 computer.setCpu(resultSet.getString("cpu"));
                 computer.setRamMemory(resultSet.getString("ram"));
                 computer.setDisk(resultSet.getString("disco"));
@@ -180,9 +184,10 @@ public class ComputerDAO implements IComputerDAO {
             }
             resultSet.close();
             dataBaseManager.getConnection().close();
-        }catch(SQLException e){
-            throw new DataRetrievalException("Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } catch (SQLException e) {
+            throw new DataRetrievalException(
+                    "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
+        } finally {
             dataBaseManager.closeConnection();
         }
 
@@ -190,34 +195,35 @@ public class ComputerDAO implements IComputerDAO {
     }
 
     public boolean theComputerIsAlreadyRegisted(Computer computer) throws DataRetrievalException {
-        try{
+        try {
             Statement statement = dataBaseManager.getConnection().createStatement();
             String query = "SELECT * FROM EquiposComputo";
             ResultSet resultSet = statement.executeQuery(query);
-            while(resultSet.next()) {
-                if(resultSet.getString("cpu").equals(computer.getCpu()) &&
-                   resultSet.getString("ram").equals(computer.getRamMemory()) &&
-                   resultSet.getString("disco").equals(computer.getDisk()) &&
-                   resultSet.getString("gpu").equals(computer.getGpu()) &&
-                   resultSet.getInt("IdMarca") == computer.getMark().getIdMark() &&
-                   resultSet.getString("fuentePoder").equals(computer.getPowerSource()) &&
-                   resultSet.getString("motherboard").equals(computer.getMotherBoard()) &&
-                   resultSet.getString("NumSerie").equals(computer.getSerialNumber()) &&
-                   resultSet.getDate("fechaAdquisición").equals(computer.getAdquisitionDate()) &&
-                   resultSet.getString("estado").equals(computer.getStatus()) &&
-                   resultSet.getString("tipo").equals(computer.getType())){
-                    
-                   resultSet.close();
-                   dataBaseManager.getConnection().close();
-                   return true;
+            while (resultSet.next()) {
+                if (resultSet.getString("cpu").equals(computer.getCpu()) &&
+                        resultSet.getString("ram").equals(computer.getRamMemory()) &&
+                        resultSet.getString("disco").equals(computer.getDisk()) &&
+                        resultSet.getString("gpu").equals(computer.getGpu()) &&
+                        resultSet.getInt("IdMarca") == computer.getMark().getIdMark() &&
+                        resultSet.getString("fuentePoder").equals(computer.getPowerSource()) &&
+                        resultSet.getString("motherboard").equals(computer.getMotherBoard()) &&
+                        resultSet.getString("NumSerie").equals(computer.getSerialNumber()) &&
+                        resultSet.getDate("fechaAdquisición").equals(computer.getAdquisitionDate()) &&
+                        resultSet.getString("estado").equals(computer.getStatus()) &&
+                        resultSet.getString("tipo").equals(computer.getType())) {
+
+                    resultSet.close();
+                    dataBaseManager.getConnection().close();
+                    return true;
                 }
             }
 
             resultSet.close();
             dataBaseManager.getConnection().close();
-        }catch(SQLException e){
-            throw new DataRetrievalException("Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
-        }finally{
+        } catch (SQLException e) {
+            throw new DataRetrievalException(
+                    "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
+        } finally {
             dataBaseManager.closeConnection();
         }
 

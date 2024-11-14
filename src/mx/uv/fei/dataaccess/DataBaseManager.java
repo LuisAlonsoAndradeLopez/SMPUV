@@ -6,29 +6,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataBaseManager {
     private Connection connection;
     private Properties dataBaseUserPropertiesFile;
 
-    public DataBaseManager(){
+    public DataBaseManager() {
         try {
             InputStream fis = getClass().getResourceAsStream("/dependencies/resources/DatabaseAccess.properties");
             dataBaseUserPropertiesFile = new Properties();
             dataBaseUserPropertiesFile.load(fis);
         } catch (IOException e) {
-            
+            e.printStackTrace();
         }
     }
-    
-    private void connect() throws SQLException{
+
+    private void connect() throws SQLException {
         connection = DriverManager.getConnection(
-            this.dataBaseUserPropertiesFile.getProperty("DATABASE_NAME"),
-            this.dataBaseUserPropertiesFile.getProperty("DATABASE_USER"),
-            this.dataBaseUserPropertiesFile.getProperty("DATABASE_PASSWORD")
-        );
+                this.dataBaseUserPropertiesFile.getProperty("DATABASE_NAME"),
+                this.dataBaseUserPropertiesFile.getProperty("DATABASE_USER"),
+                this.dataBaseUserPropertiesFile.getProperty("DATABASE_PASSWORD"));
     }
 
     public Connection getConnection() throws SQLException {
@@ -36,14 +35,15 @@ public class DataBaseManager {
         return connection;
     }
 
-    public void closeConnection(){
-        if(connection != null){
-            try{
-                if(!connection.isClosed()){
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                if (!connection.isClosed()) {
                     connection.close();
                 }
-            }catch(SQLException exception){
+            } catch (SQLException exception) {
                 Logger.getLogger(DataBaseManager.class.getName()).log(Level.SEVERE, null, exception);
+                exception.printStackTrace();
             }
         }
     }

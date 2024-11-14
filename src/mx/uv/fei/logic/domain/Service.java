@@ -11,7 +11,7 @@ public class Service {
     private String diagnosis;
     private String status;
     private String type;
-    
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
@@ -43,20 +43,20 @@ public class Service {
     public Date getStartDate() {
         return startDate;
     }
-    
-    public void setType(String type){
+
+    public void setType(String type) {
         this.type = type;
     }
-    
-    public String getType(){
+
+    public String getType() {
         return type;
     }
-    
-    public void setDiagnosis(String diagnosis){
+
+    public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
-    
-    public String getDiagnosis(){
+
+    public String getDiagnosis() {
         return diagnosis;
     }
 

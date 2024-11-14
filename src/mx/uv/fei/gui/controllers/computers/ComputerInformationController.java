@@ -9,8 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mx.uv.fei.gui.AlertPopUpGenerator;
 import mx.uv.fei.gui.controllers.services.GuiStartMaintenanceController;
@@ -48,13 +48,13 @@ public class ComputerInformationController {
 
     @FXML
     private Label serialNumberLabel;
-    
+
     @FXML
     private Label statusLabel;
 
     @FXML
     private Label typeLabel;
-    
+
     @FXML
     private void editButtonController(ActionEvent event) {
         guiComputersController.openModifyComputerPane(this);
@@ -62,25 +62,26 @@ public class ComputerInformationController {
 
     @FXML
     private void startMaintenanceButton(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/uv/fei/gui/fxml/services/GuiStartMaintenance.fxml"));
-        try{
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/mx/uv/fei/gui/fxml/services/GuiStartMaintenance.fxml"));
+        try {
             Parent parent = loader.load();
             ComputerDAO computerDAO = new ComputerDAO();
             Computer computer = computerDAO.getComputerFromDatabase(getSerialNumber());
             GuiStartMaintenanceController guiStartMaintenanceController = loader.getController();
             guiStartMaintenanceController.setComputer(computer);
             Scene scene = new Scene(parent);
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-            
+
             stage.show();
-        }catch(IOException exception){
+        } catch (IOException exception) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataRetrievalException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
-    
+
     public GuiComputersController getGuiComputersController() {
         return guiComputersController;
     }
@@ -102,7 +103,7 @@ public class ComputerInformationController {
     }
 
     public void setCpu(String cpu) {
-        this.cpuLabel .setText(cpu);
+        this.cpuLabel.setText(cpu);
     }
 
     public String getDisk() {

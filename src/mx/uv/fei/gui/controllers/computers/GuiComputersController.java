@@ -9,9 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -36,7 +36,7 @@ public class GuiComputersController {
     private TextField searchByNameTextField;
 
     @FXML
-    private void initialize(){    
+    private void initialize() {
         ComputerDAO computerDAO = new ComputerDAO();
         ArrayList<Computer> computers;
         try {
@@ -50,24 +50,23 @@ public class GuiComputersController {
     @FXML
     private void exitToMainMenu(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/uv/fei/gui/fxml/MainMenu.fxml"));
-        
-        try{
+
+        try {
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        }catch(IOException exception){
+        } catch (IOException exception) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
 
     @FXML
     private void registerComputerButtonController(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/mx/uv/fei/gui/fxml/computers/GuiRegisterComputer.fxml")
-            );
+                    getClass().getResource("/mx/uv/fei/gui/fxml/computers/GuiRegisterComputer.fxml"));
             Parent guiRegisterComputer = loader.load();
             GuiRegisterComputerController guiRegisterComputerController = loader.getController();
             guiRegisterComputerController.setGuiComputersController(this);
@@ -75,36 +74,38 @@ public class GuiComputersController {
             Stage stage = new Stage();
             stage.setTitle("Registrar Compu");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner((Stage)((Node)event.getSource()).getScene().getWindow());
+            stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
             stage.setScene(scene);
             stage.show();
-        }catch (IOException e){
-            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
-        }   
-    }
-
-    @FXML
-    private void searchByNameButtonController(ActionEvent event) {
-        computersVBox.getChildren().clear();;
-        ComputerDAO computerDAO = new ComputerDAO();
-        try {
-            ArrayList<Computer> computers = computerDAO.getSpecifiedComputersFromDatabase(searchByNameTextField.getText());
-            computerButtonMaker(computers);
-        }catch(DataRetrievalException e){
+        } catch (IOException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
 
-    public void openModifyComputerPane(ComputerInformationController computerInformationController){
+    @FXML
+    private void searchByNameButtonController(ActionEvent event) {
+        computersVBox.getChildren().clear();
+        ;
+        ComputerDAO computerDAO = new ComputerDAO();
+        try {
+            ArrayList<Computer> computers = computerDAO
+                    .getSpecifiedComputersFromDatabase(searchByNameTextField.getText());
+            computerButtonMaker(computers);
+        } catch (DataRetrievalException e) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
+        }
+    }
+
+    public void openModifyComputerPane(ComputerInformationController computerInformationController) {
         ComputerDAO computerDAO = new ComputerDAO();
         try {
             Computer computer = computerDAO.getComputerFromDatabase(computerInformationController.getSerialNumber());
             FXMLLoader modifyComputerInformationControllerLoader = new FXMLLoader(
-                getClass().getResource("/mx/uv/fei/gui/fxml/computers/ModifyComputerInformation.fxml")
-            );
+                    getClass().getResource("/mx/uv/fei/gui/fxml/computers/ModifyComputerInformation.fxml"));
 
             VBox modifyComputerInformationVBox = modifyComputerInformationControllerLoader.load();
-            ModifyComputerInformationController modifyComputerInformationController = modifyComputerInformationControllerLoader.getController();
+            ModifyComputerInformationController modifyComputerInformationController = modifyComputerInformationControllerLoader
+                    .getController();
             modifyComputerInformationController.setCpu(computer.getCpu());
             modifyComputerInformationController.setRamMemory(computer.getRamMemory());
             modifyComputerInformationController.setDisk(computer.getDisk());
@@ -119,23 +120,23 @@ public class GuiComputersController {
             modifyComputerInformationController.setGuiComputersController(this);
             modifyComputerInformationController.setComputerInformationController(computerInformationController);
             computerInformationScrollPane.setContent(modifyComputerInformationVBox);
-            
-        }catch(IOException e){
+
+        } catch (IOException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
-        }catch(DataRetrievalException e){
+        } catch (DataRetrievalException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
 
-    public void openPaneWithComputerInformation(String serialNumber){
+    public void openPaneWithComputerInformation(String serialNumber) {
         ComputerDAO computerDAO = new ComputerDAO();
-        try{
+        try {
             Computer computer = computerDAO.getComputerFromDatabase(serialNumber);
             FXMLLoader computerInformationControllerLoader = new FXMLLoader(
-                getClass().getResource("/mx/uv/fei/gui/fxml/computers/ComputerInformation.fxml")
-            );
+                    getClass().getResource("/mx/uv/fei/gui/fxml/computers/ComputerInformation.fxml"));
             VBox computerInformationVBox = computerInformationControllerLoader.load();
-            ComputerInformationController computerInformationController = computerInformationControllerLoader.getController();
+            ComputerInformationController computerInformationController = computerInformationControllerLoader
+                    .getController();
             computerInformationController.setCpu(computer.getCpu());
             computerInformationController.setRamMemory(computer.getRamMemory());
             computerInformationController.setDisk(computer.getDisk());
@@ -149,21 +150,20 @@ public class GuiComputersController {
             computerInformationController.setStatus(computer.getStatus());
             computerInformationController.setGuiComputersController(this);
             computerInformationScrollPane.setContent(computerInformationVBox);
-            
-        }catch(IOException e){
+
+        } catch (IOException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
-        }catch(DataRetrievalException e){
+        } catch (DataRetrievalException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
 
-    public void computerButtonMaker(ArrayList<Computer> computers){
+    public void computerButtonMaker(ArrayList<Computer> computers) {
         computersVBox.getChildren().clear();
-        try { 
-            for(Computer computer : computers){
+        try {
+            for (Computer computer : computers) {
                 FXMLLoader computerItemControllerLoader = new FXMLLoader(
-                    getClass().getResource("/mx/uv/fei/gui/fxml/computers/ComputerButton.fxml")
-                );
+                        getClass().getResource("/mx/uv/fei/gui/fxml/computers/ComputerButton.fxml"));
                 Pane computerItemPane = computerItemControllerLoader.load();
                 ComputerButtonController computerController = computerItemControllerLoader.getController();
                 computerController.setSerialNumber(computer.getSerialNumber());
@@ -171,7 +171,7 @@ public class GuiComputersController {
                 computerController.setGuiComputersController(this);
                 computersVBox.getChildren().add(computerItemPane);
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

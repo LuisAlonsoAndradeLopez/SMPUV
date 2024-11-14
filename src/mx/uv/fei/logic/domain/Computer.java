@@ -18,7 +18,7 @@ public class Computer {
     public Date getAdquisitionDate() {
         return adquisitionDate;
     }
-    
+
     public void setAdquisitionDate(Date adquisitionDate) {
         this.adquisitionDate = adquisitionDate;
     }
@@ -26,23 +26,23 @@ public class Computer {
     public String getCpu() {
         return cpu;
     }
-    
+
     public void setCpu(String cpu) {
         this.cpu = cpu;
     }
-    
+
     public String getDisk() {
         return disk;
     }
-    
+
     public void setDisk(String disk) {
         this.disk = disk;
     }
-    
+
     public String getGpu() {
         return gpu;
     }
-    
+
     public void setGpu(String gpu) {
         this.gpu = gpu;
     }
@@ -50,7 +50,7 @@ public class Computer {
     public Mark getMark() {
         return mark;
     }
-    
+
     public void setMark(Mark mark) {
         this.mark = mark;
     }
@@ -58,39 +58,39 @@ public class Computer {
     public String getMotherBoard() {
         return motherBoard;
     }
-    
+
     public void setMotherBoard(String motherBoard) {
         this.motherBoard = motherBoard;
     }
-    
+
     public String getPowerSource() {
         return powerSource;
     }
-    
+
     public void setPowerSource(String powerSource) {
         this.powerSource = powerSource;
     }
-    
+
     public String getRamMemory() {
         return ramMemory;
     }
-    
+
     public void setRamMemory(String ramMemory) {
         this.ramMemory = ramMemory;
     }
-    
+
     public String getSerialNumber() {
         return serialNumber;
     }
-    
+
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
-    
+
     public String getStatus() {
         return status;
     }
-    
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -98,7 +98,7 @@ public class Computer {
     public String getType() {
         return type;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }

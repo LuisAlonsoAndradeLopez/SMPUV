@@ -28,7 +28,7 @@ public class Refaction {
         return brand;
     }
 
-    public void setBrand(Mark brand){ 
+    public void setBrand(Mark brand) {
         this.brand = brand;
     }
 
@@ -56,6 +56,4 @@ public class Refaction {
         this.quantity = quantity;
     }
 
-    
-    
 }

@@ -43,10 +43,10 @@ CREATE TABLE EquiposComputo (
 );
 
 CREATE TABLE Refacciones (
-  NumSerie nvarchar(50) NOT NULL,
+  NumSerie varchar(50) NOT NULL,
   IdMarca int,
-  nombre nvarchar(125),
-  tipo nvarchar(30),
+  nombre varchar(125),
+  tipo varchar(30),
   precio decimal(64,2),
   stock int,
   PRIMARY KEY (NumSerie),

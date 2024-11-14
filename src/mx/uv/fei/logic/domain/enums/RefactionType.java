@@ -7,14 +7,14 @@ public enum RefactionType {
     GPU("Tarjeta Gráfica"),
     MOTHERBOARD("Tarjeta Madre"),
     POWERSOURCE("Fuente de Poder");
-    
+
     private final String refactionType;
-    
-    RefactionType(String refactionType){
+
+    RefactionType(String refactionType) {
         this.refactionType = refactionType;
     }
-    
-    public String getValue(){
+
+    public String getValue() {
         return refactionType;
     }
 }

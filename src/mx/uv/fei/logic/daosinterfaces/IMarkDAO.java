@@ -7,5 +7,6 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 
 public interface IMarkDAO {
     public ArrayList<Mark> getMarksFromDatabase() throws DataRetrievalException;
+
     public Mark getMarkFromDatabase(int idMark) throws DataRetrievalException;
 }

@@ -10,10 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import mx.uv.fei.gui.AlertPopUpGenerator;
@@ -64,15 +64,15 @@ public class ModifyComputerInformationController {
     private ComboBox<String> typeComboBox;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         MarkDAO markDAO = new MarkDAO();
-        try{
+        try {
             markComboBox.getItems().addAll(markDAO.getMarksFromDatabase());
-        }catch(DataRetrievalException e){
+        } catch (DataRetrievalException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
-        
-        markComboBox.setConverter(new StringConverter<Mark>(){
+
+        markComboBox.setConverter(new StringConverter<Mark>() {
 
             @Override
             public Mark fromString(String arg0) {
@@ -81,13 +81,13 @@ public class ModifyComputerInformationController {
 
             @Override
             public String toString(Mark arg0) {
-                if(arg0 != null){
+                if (arg0 != null) {
                     return arg0.getName();
                 }
-                
-                return null;  
+
+                return null;
             }
-            
+
         });
 
         cpuComboBox.getItems().add("Ryzen 5 1600 AF");
@@ -123,25 +123,28 @@ public class ModifyComputerInformationController {
     @FXML
     private void modifyButtonController(ActionEvent event) {
 
-        try{
-            if(!allFieldsContainsData()){
+        try {
+            if (!allFieldsContainsData()) {
                 new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Error", "Faltan campos por llenar");
-                return;   
-            }
-
-            if(!isValidSerialNumber()){
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede modificar la computadora", "El número de serie es erróneo");
                 return;
             }
 
-            if(isValidAdquisitionDate() > 0){
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora", "La fecha de adquisición no puede ser después de la fecha actual");
+            if (!isValidSerialNumber()) {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede modificar la computadora",
+                        "El número de serie es erróneo");
+                return;
+            }
+
+            if (isValidAdquisitionDate() > 0) {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "La fecha de adquisición no puede ser después de la fecha actual");
                 return;
             }
 
             ComputerDAO computerDAO = new ComputerDAO();
             Computer newComputerData = new Computer();
-            Computer oldComputerData = computerDAO.getComputerFromDatabase(computerInformationController.getSerialNumber());
+            Computer oldComputerData = computerDAO
+                    .getComputerFromDatabase(computerInformationController.getSerialNumber());
             newComputerData.setAdquisitionDate(Date.valueOf(adquisitionDateDatePicker.getValue()));
             newComputerData.setCpu(cpuComboBox.getValue());
             newComputerData.setDisk(diskComboBox.getValue());
@@ -153,22 +156,24 @@ public class ModifyComputerInformationController {
             newComputerData.setSerialNumber(serialNumberTextField.getText());
             newComputerData.setStatus(statusComboBox.getValue());
             newComputerData.setType(typeComboBox.getValue());
-            if(computerDAO.theComputerIsAlreadyRegisted(newComputerData)){
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Error", "La computadora ya está registrada en el sistema");
+            if (computerDAO.theComputerIsAlreadyRegisted(newComputerData)) {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Error",
+                        "La computadora ya está registrada en el sistema");
                 return;
             }
             computerDAO.modifyComputerDataFromDatabase(newComputerData, oldComputerData);
-            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Éxito", "Computadora modificada exitosamente");
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Éxito",
+                    "Computadora modificada exitosamente");
             returnToGuiComputers(event);
-        }catch(DataRetrievalException e){
+        } catch (DataRetrievalException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
-        }catch(DataWritingException e){
+        } catch (DataWritingException e) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (ConstraintViolationException e) {
-            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al modificar computadora", "El número de serie ya está ocupado");
+            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al modificar computadora",
+                    "El número de serie ya está ocupado");
         }
     }
-
 
     public ComputerInformationController getComputerInformationController() {
         return computerInformationController;
@@ -274,39 +279,40 @@ public class ModifyComputerInformationController {
         this.typeComboBox.setValue(type);
     }
 
-    private void returnToGuiComputers(ActionEvent event){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/uv/fei/gui/fxml/computers/GuiComputers.fxml"));
+    private void returnToGuiComputers(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/mx/uv/fei/gui/fxml/computers/GuiComputers.fxml"));
             Parent parent = loader.load();
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(parent);
             stage.setTitle("SMPUV");
             stage.setScene(scene);
             stage.show();
-        }catch(IllegalStateException | IOException exception){
+        } catch (IllegalStateException | IOException exception) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
 
     private boolean allFieldsContainsData() {
         return adquisitionDateDatePicker.getValue() != null &&
-               cpuComboBox.getValue() != null &&
-               diskComboBox.getValue() != null &&
-               gpuComboBox.getValue() != null &&
-               markComboBox.getValue() != null &&
-               motherBoardComboBox.getValue() != null &&
-               powerSourceComboBox.getValue() != null &&
-               ramMemoryComboBox.getValue() != null &&
-               !serialNumberTextField.getText().trim().isEmpty() &&
-               statusComboBox.getValue() != null &&
-               typeComboBox.getValue() != null;
+                cpuComboBox.getValue() != null &&
+                diskComboBox.getValue() != null &&
+                gpuComboBox.getValue() != null &&
+                markComboBox.getValue() != null &&
+                motherBoardComboBox.getValue() != null &&
+                powerSourceComboBox.getValue() != null &&
+                ramMemoryComboBox.getValue() != null &&
+                !serialNumberTextField.getText().trim().isEmpty() &&
+                statusComboBox.getValue() != null &&
+                typeComboBox.getValue() != null;
     }
 
-    private boolean isValidSerialNumber(){
+    private boolean isValidSerialNumber() {
         return serialNumberTextField.getText().trim().matches("^[a-zA-Z0-9_-]+$");
     }
 
-    private int isValidAdquisitionDate(){
+    private int isValidAdquisitionDate() {
         return Date.valueOf(adquisitionDateDatePicker.getValue()).compareTo(Date.valueOf(LocalDate.now()));
     }
 }

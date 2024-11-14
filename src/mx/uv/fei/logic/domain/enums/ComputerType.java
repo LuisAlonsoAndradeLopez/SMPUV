@@ -1,16 +1,16 @@
 package mx.uv.fei.logic.domain.enums;
 
-public enum ComputerType{
+public enum ComputerType {
     LAPTOP("Laptop"),
     DESKTOP("Escritorio");
-    
+
     private final String computerType;
-    
-    ComputerType(String computerType){
+
+    ComputerType(String computerType) {
         this.computerType = computerType;
     }
-    
-    public String getValue(){
+
+    public String getValue() {
         return computerType;
     }
 }
