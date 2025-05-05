@@ -6,24 +6,32 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="390.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.ComputerInformationController">
+<VBox prefHeight="407.0" prefWidth="470.0" style="-fx-background-color: #e0e0e0; -fx-border-color: #b7b7b7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.ComputerInformationController">
    <children>
       <HBox prefHeight="50.0" prefWidth="369.0">
          <children>
-            <Label prefHeight="47.0" prefWidth="68.0" />
-            <Label prefHeight="49.0" prefWidth="305.0" textAlignment="CENTER">
+            <Label prefHeight="47.0" prefWidth="68.0" style="-fx-background-color: #d0d0d0;" />
+            <Label prefHeight="49.0" prefWidth="305.0" style="-fx-background-color: #d0d0d0;" textAlignment="CENTER">
                <graphic>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datos de Computadora" textAlignment="CENTER" wrappingWidth="304.7294921875" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Datos de Computadora" textAlignment="CENTER" wrappingWidth="325.1295166015625">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Text>
                </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
-            <Label prefHeight="52.0" prefWidth="72.0">
+            <Label prefHeight="52.0" prefWidth="75.0" style="-fx-background-color: #d0d0d0;">
                <graphic>
                   <Button mnemonicParsing="false" onAction="#editButtonController" prefHeight="24.0" prefWidth="70.0" text="Editar">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                  </Button>
                </graphic>
             </Label>
          </children>
@@ -31,78 +39,111 @@
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="37.0" prefWidth="83.0" text="Procesador:" />
-            <Label fx:id="cpuLabel" prefHeight="37.0" prefWidth="344.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="71.0" text="Procesador:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="cpuLabel" prefHeight="28.0" prefWidth="381.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="66.0" text="Memoria:" />
-            <Label fx:id="ramMemoryLabel" prefHeight="38.0" prefWidth="366.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="60.0" text="Memoria:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="ramMemoryLabel" prefHeight="28.0" prefWidth="392.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="44.0" text="Disco:" />
-            <Label fx:id="diskLabel" prefHeight="38.0" prefWidth="386.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="40.0" text="Disco:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="diskLabel" prefHeight="28.0" prefWidth="412.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="106.0" text="Tarjeta Grafica:" />
-            <Label fx:id="gpuLabel" prefHeight="38.0" prefWidth="327.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="92.0" text="Tarjeta Grafica:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="gpuLabel" prefHeight="28.0" prefWidth="359.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="261.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="50.0" text="Marca:" />
-            <Label fx:id="markLabel" prefHeight="38.0" prefWidth="382.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="43.0" text="Marca:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="markLabel" prefHeight="28.0" prefWidth="409.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="118.0" text="Fuente de Poder:" />
-            <Label fx:id="powerSourceLabel" prefHeight="38.0" prefWidth="312.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="100.0" text="Fuente de Poder:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="powerSourceLabel" prefHeight="28.0" prefWidth="352.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="40.0" text="Tipo: " />
-            <Label fx:id="typeLabel" prefHeight="38.0" prefWidth="390.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="33.0" text="Tipo: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="typeLabel" prefHeight="28.0" prefWidth="419.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="121.0" text="Numero de Serie:" />
-            <Label fx:id="serialNumberLabel" prefHeight="38.0" prefWidth="310.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="102.0" text="Numero de Serie:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="serialNumberLabel" prefHeight="28.0" prefWidth="350.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="38.0" prefWidth="148.0" text="Fecha de Adquisicion: " />
-            <Label fx:id="adquisitionDateLabel" prefHeight="38.0" prefWidth="282.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="127.0" text="Fecha de Adquisicion: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="adquisitionDateLabel" prefHeight="28.0" prefWidth="326.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="35.0" prefWidth="55.0" text="Estado: " />
-            <Label fx:id="statusLabel" prefHeight="35.0" prefWidth="376.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="45.0" text="Estado: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="statusLabel" prefHeight="28.0" prefWidth="407.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="30.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="32.0" prefWidth="102.0" text="Tarjeta Madre: " />
-            <Label fx:id="motherBoardLabel" prefHeight="32.0" prefWidth="329.0" text="Sin Asignar" />
+            <Label prefHeight="28.0" prefWidth="86.0" text="Tarjeta Madre: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="motherBoardLabel" prefHeight="28.0" prefWidth="366.0" text="Sin Asignar" />
          </children>
       </HBox>
       <HBox prefHeight="39.0" prefWidth="450.0">

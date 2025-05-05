@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import mx.uv.fei.dataaccess.DataBaseManager;
 import mx.uv.fei.logic.daosinterfaces.IRefactionsDAO;
@@ -16,7 +18,7 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class RefactionDAO implements IRefactionsDAO {
-
+    private static final Logger LOGGER = Logger.getLogger(RefactionDAO.class.getName());
     private final DataBaseManager dataBaseManager;
 
     public RefactionDAO() {
@@ -37,8 +39,10 @@ public class RefactionDAO implements IRefactionsDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new ConstraintViolationException("Código ya utilizado, por favor introduzca otro");
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataWritingException("Error al agregar refacción. Verifique su conexión e intentelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();
@@ -62,8 +66,10 @@ public class RefactionDAO implements IRefactionsDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new ConstraintViolationException("Código ya utilizado, por favor introduzca otro");
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataWritingException("Error al modificar. Verifique su conexion e intentelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();
@@ -95,7 +101,7 @@ public class RefactionDAO implements IRefactionsDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -129,7 +135,7 @@ public class RefactionDAO implements IRefactionsDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -147,7 +153,7 @@ public class RefactionDAO implements IRefactionsDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataWritingException("Error al eliminar. Verifique su conexion e intentelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();
@@ -169,7 +175,7 @@ public class RefactionDAO implements IRefactionsDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar las Marcas. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -192,7 +198,7 @@ public class RefactionDAO implements IRefactionsDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar las Marcas. Verifique su conexion e intentelo de nuevo");
         } finally {

@@ -1,6 +1,8 @@
 package mx.uv.fei.gui.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,8 @@ import javafx.stage.Stage;
 import mx.uv.fei.gui.AlertPopUpGenerator;
 
 public class MainMenuController {
+    private static final Logger LOGGER = Logger.getLogger(MainMenuController.class.getName());
+
     @FXML
     private Button partsButton;
     @FXML
@@ -28,7 +32,8 @@ public class MainMenuController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -42,7 +47,8 @@ public class MainMenuController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

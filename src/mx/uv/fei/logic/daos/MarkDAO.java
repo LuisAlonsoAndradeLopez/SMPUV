@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import mx.uv.fei.dataaccess.DataBaseManager;
 import mx.uv.fei.logic.daosinterfaces.IMarkDAO;
@@ -12,6 +14,7 @@ import mx.uv.fei.logic.domain.Mark;
 import mx.uv.fei.logic.exceptions.DataRetrievalException;
 
 public class MarkDAO implements IMarkDAO {
+    private static final Logger LOGGER = Logger.getLogger(MarkDAO.class.getName());
     private final DataBaseManager dataBaseManager;
 
     public MarkDAO() {
@@ -36,7 +39,7 @@ public class MarkDAO implements IMarkDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -63,7 +66,7 @@ public class MarkDAO implements IMarkDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {

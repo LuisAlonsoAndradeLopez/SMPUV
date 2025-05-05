@@ -9,31 +9,39 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.GuiComputersController">
+<Pane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.GuiComputersController">
    <children>
+      <Pane prefHeight="87.0" prefWidth="1024.0" style="-fx-background-color: #d7d7d7;">
+         <children>
+            <Button layoutX="24.0" layoutY="27.0" mnemonicParsing="false" onAction="#exitToMainMenu" prefHeight="35.0" prefWidth="105.0" text="Salir">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text layoutX="321.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrar Computadoras">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
       <ScrollPane hbarPolicy="NEVER" layoutX="25.0" layoutY="159.0" prefHeight="410.0" prefWidth="470.0">
          <content>
-            <VBox fx:id="computersVBox" prefHeight="408.0" prefWidth="453.0" />
+            <VBox fx:id="computersVBox" prefHeight="407.0" prefWidth="470.0" />
          </content>
       </ScrollPane>
       <ScrollPane fx:id="computerInformationScrollPane" layoutX="527.0" layoutY="159.0" prefHeight="410.0" prefWidth="470.0" />
-      <Button layoutX="672.0" layoutY="94.0" mnemonicParsing="false" onAction="#registerComputerButtonController" prefHeight="53.0" prefWidth="180.0" text="Registrar Computadora">
+      <Button layoutX="672.0" layoutY="96.0" mnemonicParsing="false" onAction="#registerComputerButtonController" prefHeight="53.0" prefWidth="180.0" text="Registrar Computadora">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Text layoutX="82.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Deja en blanco para mostrar todas las computadoras)" />
-      <Text layoutX="47.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscar por nombre:" />
-      <TextField fx:id="searchByNameTextField" layoutX="180.0" layoutY="96.0" prefHeight="24.0" prefWidth="223.0" />
-      <Button layoutX="410.0" layoutY="96.0" mnemonicParsing="false" onAction="#searchByNameButtonController" text="Buscar">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Text layoutX="310.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrar Computadoras">
+      <Text layoutX="87.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Deja en blanco para mostrar todas las computadoras)" />
+      <Text layoutX="52.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscar por nombre:">
          <font>
-            <Font size="30.0" />
-         </font>
-      </Text>
-      <Button layoutX="32.0" layoutY="19.0" mnemonicParsing="false" onAction="#exitToMainMenu" prefHeight="35.0" prefWidth="105.0" text="Salir">
+            <Font name="System Bold" size="12.0" />
+         </font></Text>
+      <TextField fx:id="searchByNameTextField" layoutX="169.0" layoutY="98.0" prefHeight="25.0" prefWidth="239.0" />
+      <Button layoutX="415.0" layoutY="98.0" mnemonicParsing="false" onAction="#searchByNameButtonController" text="Buscar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

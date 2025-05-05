@@ -1,6 +1,8 @@
 package mx.uv.fei.gui.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import mx.uv.fei.logic.domain.MaintenanceMan;
 import mx.uv.fei.logic.exceptions.LoginException;
 
 public class LoginController {
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
+
     @FXML
     private TextField idTextField;
     @FXML
@@ -50,7 +54,8 @@ public class LoginController {
                 }
 
                 errorLabel.setText("Las credenciales ingresadas no coinciden con ningun usuario");
-            } catch (LoginException exception) {
+            } catch (LoginException e) {
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                         "Hubo un error, inténtelo más tarde");
             }
@@ -67,13 +72,15 @@ public class LoginController {
 
             Stage stage = new Stage();
             Scene scene = new Scene(parent);
-            stage.setTitle("SPGER");
+            stage.setTitle("SMPUV");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
 
             Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             oldStage.close();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

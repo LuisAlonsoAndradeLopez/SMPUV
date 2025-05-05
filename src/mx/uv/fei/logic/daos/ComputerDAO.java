@@ -1,5 +1,7 @@
 package mx.uv.fei.logic.daos;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class ComputerDAO implements IComputerDAO {
+    private static final Logger LOGGER = Logger.getLogger(ComputerDAO.class.getName());
     private final DataBaseManager dataBaseManager;
 
     public ComputerDAO() {
@@ -43,8 +46,10 @@ public class ComputerDAO implements IComputerDAO {
             preparedStatement.setString(11, computer.getType());
             preparedStatement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new ConstraintViolationException("Número de serie ya utilizado, por favor introduzca otro");
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataWritingException("Error al agregar computadora. Verifique su conexion e intentelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();
@@ -73,8 +78,10 @@ public class ComputerDAO implements IComputerDAO {
             preparedStatement.setString(12, originalComputerData.getSerialNumber());
             preparedStatement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new ConstraintViolationException("Número de serie ya utilizado, por favor introduzca otro");
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataWritingException(
                     "Error al modificar computadora. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -111,6 +118,7 @@ public class ComputerDAO implements IComputerDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -149,6 +157,7 @@ public class ComputerDAO implements IComputerDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -185,6 +194,7 @@ public class ComputerDAO implements IComputerDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {
@@ -221,6 +231,7 @@ public class ComputerDAO implements IComputerDAO {
             resultSet.close();
             dataBaseManager.getConnection().close();
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataRetrievalException(
                     "Fallo al recuperar la informacion. Verifique su conexion e intentelo de nuevo");
         } finally {

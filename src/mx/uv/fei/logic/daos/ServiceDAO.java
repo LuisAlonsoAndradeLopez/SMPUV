@@ -3,12 +3,15 @@ package mx.uv.fei.logic.daos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import mx.uv.fei.dataaccess.DataBaseManager;
 import mx.uv.fei.logic.domain.Service;
 import mx.uv.fei.logic.exceptions.DataInsertionException;
 
 public class ServiceDAO {
+    private static final Logger LOGGER = Logger.getLogger(ServiceDAO.class.getName());
     private final DataBaseManager dataBaseManager;
 
     public ServiceDAO() {
@@ -40,7 +43,8 @@ public class ServiceDAO {
 
             generatedKeys.close();
             serviceStatement.close();
-        } catch (SQLException exception) {
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new DataInsertionException(
                     "Error al conectar con la base de datos, verifique su conexión e inténtelo de nuevo");
         } finally {

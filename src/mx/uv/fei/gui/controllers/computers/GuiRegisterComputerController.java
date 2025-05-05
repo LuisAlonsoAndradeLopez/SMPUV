@@ -3,6 +3,9 @@ package mx.uv.fei.gui.controllers.computers;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import mx.uv.fei.gui.AlertPopUpGenerator;
@@ -25,6 +29,7 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class GuiRegisterComputerController {
+    private static final Logger LOGGER = Logger.getLogger(GuiRegisterComputerController.class.getName());
     private GuiComputersController guiComputersController;
 
     @FXML
@@ -69,6 +74,7 @@ public class GuiRegisterComputerController {
         try {
             markComboBox.getItems().addAll(markDAO.getMarksFromDatabase());
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
 
@@ -113,6 +119,20 @@ public class GuiRegisterComputerController {
         statusComboBox.getItems().add(ComputerStatus.OUT_OF_SERVICE.getValue());
         typeComboBox.getItems().add(ComputerType.DESKTOP.getValue());
         typeComboBox.getItems().add(ComputerType.LAPTOP.getValue());
+
+        UnaryOperator<TextFormatter.Change> serialNumberTextFieldFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 50) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "El número de serie debe tener 50 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        serialNumberTextField.setTextFormatter(new TextFormatter<>(serialNumberTextFieldFilter));
     }
 
     @FXML
@@ -155,22 +175,26 @@ public class GuiRegisterComputerController {
                 return;
             }
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
 
         try {
             computerDAO.addComputerToDatabase(computer);
-            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Éxito",
+            new AlertPopUpGenerator().showCustomMessage(AlertType.INFORMATION, "Éxito",
                     "Computadora registrada exitosamente");
             ArrayList<Computer> computers = computerDAO.getComputersFromDatabase();
             guiComputersController.computerButtonMaker(computers);
             Stage stage = (Stage) registerButton.getScene().getWindow();
             stage.close();
         } catch (DataWritingException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (ConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al registrar computadora",
                     "El número de serie ya está usado");
         }

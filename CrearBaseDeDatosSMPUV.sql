@@ -26,7 +26,7 @@ CREATE TABLE Marcas (
 );
 
 CREATE TABLE EquiposComputo (
-  NumSerie varchar(30) NOT NULL,
+  NumSerie varchar(50) NOT NULL,
   IdMarca int,
   fuentePoder varchar(50),
   cpu varchar(50),
@@ -47,7 +47,7 @@ CREATE TABLE Refacciones (
   IdMarca int,
   nombre varchar(125),
   tipo varchar(30),
-  precio decimal(64,2),
+  precio decimal(16,2),
   stock int,
   PRIMARY KEY (NumSerie),
   KEY FK_IdMarca_Refacciones (IdMarca),
@@ -56,12 +56,12 @@ CREATE TABLE Refacciones (
 
 CREATE TABLE Servicios (
   IdServicio int NOT NULL AUTO_INCREMENT,
-  NumSerie varchar(30),
+  NumSerie varchar(50),
   IdCliente int,
   fechaInicio date,
   fechaFin date,
   tipo varchar(30),
-  costo decimal(64,2),
+  costo decimal(16,2),
   descripción text,
   estado varchar(30),
   PRIMARY KEY (IdServicio),

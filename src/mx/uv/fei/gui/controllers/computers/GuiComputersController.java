@@ -2,6 +2,8 @@ package mx.uv.fei.gui.controllers.computers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +24,7 @@ import mx.uv.fei.logic.domain.Computer;
 import mx.uv.fei.logic.exceptions.DataRetrievalException;
 
 public class GuiComputersController {
+    private static final Logger LOGGER = Logger.getLogger(GuiComputersController.class.getName());
 
     @FXML
     private Pane backgroundPane;
@@ -43,6 +46,7 @@ public class GuiComputersController {
             computers = computerDAO.getComputersFromDatabase();
             computerButtonMaker(computers);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -57,7 +61,8 @@ public class GuiComputersController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -78,6 +83,7 @@ public class GuiComputersController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -85,13 +91,13 @@ public class GuiComputersController {
     @FXML
     private void searchByNameButtonController(ActionEvent event) {
         computersVBox.getChildren().clear();
-        ;
         ComputerDAO computerDAO = new ComputerDAO();
         try {
             ArrayList<Computer> computers = computerDAO
                     .getSpecifiedComputersFromDatabase(searchByNameTextField.getText());
             computerButtonMaker(computers);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -122,8 +128,10 @@ public class GuiComputersController {
             computerInformationScrollPane.setContent(modifyComputerInformationVBox);
 
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -152,8 +160,10 @@ public class GuiComputersController {
             computerInformationScrollPane.setContent(computerInformationVBox);
 
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -172,6 +182,7 @@ public class GuiComputersController {
                 computersVBox.getChildren().add(computerItemPane);
             }
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

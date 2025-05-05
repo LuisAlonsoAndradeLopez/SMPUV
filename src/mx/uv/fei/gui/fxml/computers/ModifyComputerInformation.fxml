@@ -9,13 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="390.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.ModifyComputerInformationController">
+<VBox prefHeight="407.0" prefWidth="470.0" style="-fx-background-color: #e0e0e0; -fx-border-color: #b7b7b7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.computers.ModifyComputerInformationController">
    <children>
-      <HBox prefHeight="50.0" prefWidth="369.0">
+      <HBox prefHeight="39.0" prefWidth="450.0" style="-fx-background-color: #d0d0d0;">
          <children>
-            <Label prefHeight="50.0" prefWidth="29.0" />
+            <Label prefHeight="32.0" prefWidth="9.0" />
             <Label prefHeight="50.0" prefWidth="82.0">
                <graphic>
                   <Button mnemonicParsing="false" onAction="#exitButtonController" prefHeight="24.0" prefWidth="81.0" text="Salir">
@@ -25,7 +26,10 @@
                </graphic></Label>
             <Label prefHeight="50.0" prefWidth="217.0" textAlignment="CENTER">
                <graphic>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Modificar Datos de Computadora" textAlignment="CENTER" wrappingWidth="225.7294921875" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Modificar Datos de Computadora" textAlignment="CENTER" wrappingWidth="280.1294870376587">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Text>
                </graphic>
             </Label>
             <Label prefHeight="50.0" prefWidth="87.0">
@@ -41,10 +45,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="26.0" prefWidth="11.0" />
-            <Label prefHeight="36.0" prefWidth="83.0" text="Procesador:" />
+            <Label prefHeight="32.0" prefWidth="72.0" text="Procesador:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="352.0">
                <children>
-                  <ComboBox fx:id="cpuComboBox" layoutX="1.0" layoutY="6.0" prefHeight="24.0" prefWidth="347.0" promptText="--Seleccionar Procesador--">
+                  <ComboBox fx:id="cpuComboBox" layoutX="1.0" layoutY="4.0" prefHeight="25.0" prefWidth="374.0" promptText="--Seleccionar Procesador--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -56,10 +63,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="11.0" />
-            <Label prefHeight="36.0" prefWidth="67.0" text="Memoria:" />
+            <Label prefHeight="32.0" prefWidth="59.0" text="Memoria:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="366.0">
                <children>
-                  <ComboBox fx:id="ramMemoryComboBox" layoutY="6.0" prefHeight="24.0" prefWidth="364.0" promptText="--Seleccionar Memoria--">
+                  <ComboBox fx:id="ramMemoryComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="388.0" promptText="--Seleccionar Memoria--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -71,10 +81,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="11.0" />
-            <Label prefHeight="36.0" prefWidth="46.0" text="Disco:" />
+            <Label prefHeight="32.0" prefWidth="40.0" text="Disco:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="389.0">
                <children>
-                  <ComboBox fx:id="diskComboBox" layoutX="1.0" layoutY="6.0" prefHeight="24.0" prefWidth="385.0" promptText="--Seleccionar Disco--">
+                  <ComboBox fx:id="diskComboBox" layoutX="1.0" layoutY="4.0" prefHeight="25.0" prefWidth="406.0" promptText="--Seleccionar Disco--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -86,10 +99,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="108.0" text="Tarjeta Grafica:" />
+            <Label prefHeight="32.0" prefWidth="91.0" text="Tarjeta Grafica:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="gpuComboBox" layoutY="5.0" prefHeight="24.0" prefWidth="324.0" promptText="--Seleccionar Tarjeta Grafica--">
+                  <ComboBox fx:id="gpuComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="357.0" promptText="--Seleccionar Tarjeta Grafica--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -101,10 +117,13 @@
       <HBox prefHeight="40.0" prefWidth="261.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="51.0" text="Marca:" />
+            <Label prefHeight="32.0" prefWidth="44.0" text="Marca:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="380.0">
                <children>
-                  <ComboBox fx:id="markComboBox" layoutY="6.0" prefHeight="25.0" prefWidth="380.0" promptText="--Seleccionar Marca--">
+                  <ComboBox fx:id="markComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="404.0" promptText="--Seleccionar Marca--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ComboBox>
@@ -115,10 +134,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="118.0" text="Fuente de Poder:" />
+            <Label prefHeight="32.0" prefWidth="100.0" text="Fuente de Poder:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="320.0">
                <children>
-                  <ComboBox fx:id="powerSourceComboBox" layoutX="1.0" layoutY="5.0" prefHeight="24.0" prefWidth="313.0" promptText="--Seleccionar Fuente de Poder--">
+                  <ComboBox fx:id="powerSourceComboBox" layoutX="1.0" layoutY="4.0" prefHeight="25.0" prefWidth="347.0" promptText="--Seleccionar Fuente de Poder--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -130,10 +152,13 @@
       <HBox prefHeight="40.0" prefWidth="353.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="40.0" text="Tipo:" />
+            <Label prefHeight="32.0" prefWidth="34.0" text="Tipo:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane layoutX="21.0" prefHeight="36.0" prefWidth="397.0">
                <children>
-                  <ComboBox fx:id="typeComboBox" layoutY="6.0" prefHeight="25.0" prefWidth="391.0" promptText="--Seleccionar Tipo--">
+                  <ComboBox fx:id="typeComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="414.0" promptText="--Seleccionar Tipo--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ComboBox>
@@ -144,10 +169,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="122.0" text="Numero de Serie:" />
+            <Label prefHeight="32.0" prefWidth="103.0" text="Numero de Serie:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="313.0">
                <children>
-                  <TextField fx:id="serialNumberTextField" layoutX="-1.0" layoutY="6.0" prefHeight="25.0" prefWidth="310.0" />
+                  <TextField fx:id="serialNumberTextField" layoutX="-1.0" layoutY="5.0" prefHeight="25.0" prefWidth="345.0" />
                </children>
             </AnchorPane>
          </children>
@@ -155,10 +183,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="36.0" prefWidth="149.0" text="Fecha de Adquisicion: " />
+            <Label prefHeight="32.0" prefWidth="128.0" text="Fecha de Adquisicion: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="36.0" prefWidth="286.0">
                <children>
-                  <DatePicker fx:id="adquisitionDateDatePicker" editable="false" layoutX="-2.0" layoutY="6.0" prefHeight="24.0" prefWidth="283.0">
+                  <DatePicker fx:id="adquisitionDateDatePicker" editable="false" layoutX="-2.0" layoutY="5.0" prefHeight="25.0" prefWidth="322.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></DatePicker>
@@ -169,10 +200,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="32.0" prefWidth="55.0" text="Estado: " />
+            <Label prefHeight="32.0" prefWidth="46.0" text="Estado: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="32.0" prefWidth="377.0">
                <children>
-                  <ComboBox fx:id="statusComboBox" layoutY="5.0" prefHeight="24.0" prefWidth="376.0" promptText="--Seleccionar Estado--">
+                  <ComboBox fx:id="statusComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="402.0" promptText="--Seleccionar Estado--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ComboBox>
@@ -183,10 +217,13 @@
       <HBox prefHeight="40.0" prefWidth="369.0">
          <children>
             <Label prefHeight="25.0" prefWidth="10.0" />
-            <Label prefHeight="32.0" prefWidth="101.0" text="Tarjeta Madre: " />
+            <Label prefHeight="32.0" prefWidth="87.0" text="Tarjeta Madre: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
             <AnchorPane prefHeight="32.0" prefWidth="333.0">
                <children>
-                  <ComboBox fx:id="motherBoardComboBox" layoutY="4.0" prefHeight="24.0" prefWidth="330.0" promptText="--Seleccionar Tarjeta Madre--">
+                  <ComboBox fx:id="motherBoardComboBox" layoutY="4.0" prefHeight="25.0" prefWidth="361.0" promptText="--Seleccionar Tarjeta Madre--">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

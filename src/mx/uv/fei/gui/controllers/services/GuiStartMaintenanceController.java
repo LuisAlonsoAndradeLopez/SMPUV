@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +22,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import mx.uv.fei.gui.AlertPopUpGenerator;
 import mx.uv.fei.logic.daos.ServiceDAO;
@@ -27,6 +32,7 @@ import mx.uv.fei.logic.domain.enums.ServiceStatus;
 import mx.uv.fei.logic.exceptions.DataInsertionException;
 
 public class GuiStartMaintenanceController {
+    private static final Logger LOGGER = Logger.getLogger(GuiStartMaintenanceController.class.getName());
     private ArrayList<String> serviceTypes;
     private Computer computer;
 
@@ -70,6 +76,35 @@ public class GuiStartMaintenanceController {
         for (String serviceType : serviceTypes) {
             serviceTypeComboBox.getItems().add(serviceType);
         }
+
+        Pattern validDecimalPattern = Pattern.compile("\\d{1,16}(\\.\\d{0,2})?");
+        UnaryOperator<TextFormatter.Change> costTextFieldFilter = change -> {
+            String newText = change.getControlNewText();
+            if (validDecimalPattern.matcher(newText).matches()) {
+
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "El costo debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
+            }
+
+            return null;
+        };
+
+        UnaryOperator<TextFormatter.Change> diagnosisTextAreaFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 500) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "Las observaciones deben tener 500 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        costTextField.setTextFormatter(new TextFormatter<>(costTextFieldFilter));
+        diagnosisTextArea.setTextFormatter(new TextFormatter<>(diagnosisTextAreaFilter));
     }
 
     @FXML
@@ -83,7 +118,8 @@ public class GuiStartMaintenanceController {
             stage.setScene(scene);
 
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -114,7 +150,8 @@ public class GuiStartMaintenanceController {
 
                                 returnToComputerManager(event);
                             }
-                        } catch (DataInsertionException exception) {
+                        } catch (DataInsertionException e) {
+                            LOGGER.log(Level.SEVERE, "Something went wrong", e);
                             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                                     "Hubo un error, inténtelo más tarde");
                         }

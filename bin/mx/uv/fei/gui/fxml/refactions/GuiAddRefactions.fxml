@@ -14,56 +14,56 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.refactions.GuiAddRefactionsController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.refactions.GuiAddRefactionsController">
    <children>
-      <Label alignment="TOP_CENTER" prefHeight="45.0" prefWidth="440.0" text="Añadir inventario" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <Label fx:id="titleLabel" alignment="TOP_CENTER" layoutX="5.2" layoutY="14.0" prefHeight="36.0" prefWidth="440.0" text="Registrar refacción" AnchorPane.bottomAnchor="424.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <GridPane alignment="CENTER_LEFT" hgap="10.0" layoutX="8.0" layoutY="41.0" prefHeight="451.0" prefWidth="417.0">
+      <GridPane alignment="CENTER_LEFT" hgap="10.0" layoutX="8.0" layoutY="60.0" prefHeight="425.0" prefWidth="432.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="227.0" minWidth="10.0" prefWidth="102.0" />
           <ColumnConstraints maxWidth="376.0" minWidth="10.0" prefWidth="305.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="64.0" minHeight="4.800014495849609" prefHeight="64.0" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="122.19998550415039" minHeight="4.600009155273433" prefHeight="42.8" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="159.5999755859375" minHeight="3.8000000000000114" prefHeight="57.59999389648438" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="170.99998474121097" minHeight="0.0" prefHeight="47.199981689453125" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="216.2" minHeight="10.0" prefHeight="57.600009155273426" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="201.8000030517578" minHeight="10.0" prefHeight="65.80000610351567" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="216.20001220703125" minHeight="10.0" prefHeight="101.79998779296875" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
             <Label alignment="TOP_LEFT" text="Código:">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label text="Nombre:" GridPane.rowIndex="1">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label text="Marca:" GridPane.rowIndex="2">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label text="Tipo:" GridPane.rowIndex="3">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label text="Precio: $" GridPane.rowIndex="4">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label text="Cantidad:" GridPane.rowIndex="5">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <ChoiceBox fx:id="typeChoiceBox" prefHeight="24.0" prefWidth="311.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -78,7 +78,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+            <TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="326.0" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -92,7 +92,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#saveRegister" prefHeight="33.0" prefWidth="106.0" text="Registrar" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <Button fx:id="saveRegisterButton" mnemonicParsing="false" onAction="#saveRegister" prefHeight="33.0" prefWidth="106.0" text="Registrar" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font size="16.0" />
                </font>

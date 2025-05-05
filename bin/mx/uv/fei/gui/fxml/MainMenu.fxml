@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.MainMenuController">
    <children>
-      <Pane layoutX="111.0" layoutY="113.0" prefHeight="481.0" prefWidth="798.0">
+      <Pane layoutX="58.0" layoutY="60.0" prefHeight="484.0" prefWidth="915.0" style="-fx-background-color: #d7d7d7;">
          <children>
-            <Button fx:id="partsButton" layoutX="119.0" layoutY="116.0" mnemonicParsing="false" onAction="#goToPartsManager" prefHeight="82.0" prefWidth="561.0" text="Administrar refacciones">
+            <Button fx:id="partsButton" layoutX="175.0" layoutY="137.0" mnemonicParsing="false" onAction="#goToPartsManager" prefHeight="82.0" prefWidth="561.0" text="Administrar refacciones">
                <font>
                   <Font size="31.0" />
                </font>
@@ -17,7 +17,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="computersButton" layoutX="119.0" layoutY="260.0" mnemonicParsing="false" onAction="#goToComputerManager" prefHeight="82.0" prefWidth="561.0" text="Administrar equipos de cómputo">
+            <Button fx:id="computersButton" layoutX="175.0" layoutY="281.0" mnemonicParsing="false" onAction="#goToComputerManager" prefHeight="82.0" prefWidth="561.0" text="Administrar equipos de cómputo">
                <font>
                   <Font size="31.0" />
                </font>

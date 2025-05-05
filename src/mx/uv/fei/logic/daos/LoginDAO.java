@@ -3,6 +3,8 @@ package mx.uv.fei.logic.daos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import mx.uv.fei.dataaccess.DataBaseManager;
 import mx.uv.fei.logic.daosinterfaces.ILoginDAO;
@@ -11,6 +13,7 @@ import mx.uv.fei.logic.domain.MaintenanceMan;
 import mx.uv.fei.logic.exceptions.LoginException;
 
 public class LoginDAO implements ILoginDAO {
+    private static final Logger LOGGER = Logger.getLogger(LoginDAO.class.getName());
     private final DataBaseManager dataBaseManager;
 
     public LoginDAO() {
@@ -37,7 +40,8 @@ public class LoginDAO implements ILoginDAO {
                 maintenanceMan.setSecondSurname(resultSet.getString("apellidoMaterno"));
                 maintenanceMan.setStaffNumber(resultSet.getInt("NumPersonal"));
             }
-        } catch (SQLException exception) {
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new LoginException("Error de conexión. Favor de verificar su conexión e inténtelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();
@@ -66,7 +70,8 @@ public class LoginDAO implements ILoginDAO {
                 degreeBoss.setFirstSurname(resultSet.getString("apellidoPaterno"));
                 degreeBoss.setSecondSurname(resultSet.getString("apellidoMaterno"));
             }
-        } catch (SQLException exception) {
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             throw new LoginException("Error de conexion. Favor de verificar su conexion e intentelo de nuevo");
         } finally {
             dataBaseManager.closeConnection();

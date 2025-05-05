@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222423;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.fei.gui.controllers.LoginController">
    <children>
-      <Pane fx:id="headerPane" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #24afff;">
+      <Pane fx:id="headerPane" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #d7d7d7;">
          <children>
             <Label layoutX="224.0" layoutY="8.0" text="SMPUV">
                <font>
@@ -24,12 +24,12 @@
             </Label>
          </children>
       </Pane>
-      <Label layoutX="40.0" layoutY="144.0" prefHeight="25.0" prefWidth="143.0" text="Identificador: " textFill="WHITE">
+      <Label layoutX="40.0" layoutY="144.0" prefHeight="25.0" prefWidth="143.0" text="Identificador: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="51.0" layoutY="214.0" prefHeight="30.0" prefWidth="130.0" text="Contraseña: " textFill="WHITE">
+      <Label layoutX="51.0" layoutY="214.0" prefHeight="30.0" prefWidth="130.0" text="Contraseña: ">
          <font>
             <Font size="20.0" />
          </font>
@@ -44,7 +44,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginButton" layoutX="202.0" layoutY="311.0" mnemonicParsing="false" onAction="#logIn" style="-fx-background-radius: 30 30 30 30;" text="Iniciar sesión">
+      <Button fx:id="loginButton" layoutX="202.0" layoutY="311.0" mnemonicParsing="false" onAction="#logIn" text="Iniciar sesión">
          <font>
             <Font size="28.0" />
          </font>

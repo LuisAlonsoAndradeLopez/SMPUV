@@ -2,6 +2,8 @@ package mx.uv.fei.gui.controllers.refactions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -31,6 +33,8 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class GuiRefactionsController {
+    private static final Logger LOGGER = Logger.getLogger(GuiRefactionsController.class.getName());
+
     @FXML
     private TableColumn<Refaction, String> codeColumn;
 
@@ -72,6 +76,7 @@ public class GuiRefactionsController {
             ObservableList<Refaction> refactionsList = FXCollections.observableArrayList(refactions);
             refactionsTable.setItems(refactionsList);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
 
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
@@ -96,7 +101,8 @@ public class GuiRefactionsController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -111,6 +117,7 @@ public class GuiRefactionsController {
             ObservableList<Refaction> refactionsList = FXCollections.observableArrayList(refacciones);
             refactionsTable.setItems(refactionsList);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
 
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
@@ -142,7 +149,7 @@ public class GuiRefactionsController {
             Scene scene = new Scene(guiAddRefactions);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle(("Registrar refacciones"));
+            stage.setTitle(("Registrar refacción"));
 
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -155,7 +162,7 @@ public class GuiRefactionsController {
                 ObservableList<Refaction> refactionsList = FXCollections.observableArrayList(refactions);
                 refactionsTable.setItems(refactionsList);
             } catch (DataRetrievalException e) {
-
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                         "Hubo un error, inténtelo más tarde");
             }
@@ -169,6 +176,7 @@ public class GuiRefactionsController {
             markColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBrand().getName()));
 
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
 
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
@@ -180,18 +188,20 @@ public class GuiRefactionsController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/mx/uv/fei/gui/fxml/refactions/GuiAddRefactions.fxml"));
             Parent guiAddRefactions = loader.load();
-            GuiAddRefactionsController guiAddPartsController = loader.getController();
+            GuiAddRefactionsController guiAddRefactionsController = loader.getController();
 
             Refaction refaccion = refactionsTable.getSelectionModel().getSelectedItem();
 
-            guiAddPartsController.originalRefaction = refaccion;
-            guiAddPartsController.setEditing(true);
-            guiAddPartsController.editRefaction();
+            guiAddRefactionsController.originalRefaction = refaccion;
+            guiAddRefactionsController.titleLabel.setText("Modificar refacción");
+            guiAddRefactionsController.saveRegisterButton.setText("Modificar");
+            guiAddRefactionsController.setEditing(true);
+            guiAddRefactionsController.editRefaction();
 
             Scene scene = new Scene(guiAddRefactions);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle(("Registrar refacciones"));
+            stage.setTitle(("Modificar refacción"));
 
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -204,7 +214,7 @@ public class GuiRefactionsController {
                 ObservableList<Refaction> refactionsList = FXCollections.observableArrayList(refactions);
                 refactionsTable.setItems(refactionsList);
             } catch (DataRetrievalException e) {
-
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                         "Hubo un error, inténtelo más tarde");
             }
@@ -217,7 +227,7 @@ public class GuiRefactionsController {
                     .setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getQuantity()).asObject());
             markColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getBrand().getName()));
         } catch (IOException e) {
-
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }
@@ -234,6 +244,7 @@ public class GuiRefactionsController {
             ObservableList<Refaction> refactionsList = FXCollections.observableArrayList(refactions);
             refactionsTable.setItems(refactionsList);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
 
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }

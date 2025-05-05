@@ -9,22 +9,15 @@
             "name": "SMPUV",
             "request": "launch",
             "mainClass": "mx.uv.fei.SMPUV",
-            "projectName": "SMPUV_f627da25"
-        },
-        {
-            "type": "java",
-            "name": "SMPUV",
-            "request": "launch",
-            "mainClass": "mx.uv.fei.SMPUV",
-            "projectName": "SMPUV_91953d9c",
-            "vmArgs": "--module-path /home/luisalonso/Documentos/JavaDepencencies/javafx-sdk-19.0.2.1/lib --add-modules javafx.controls,javafx.fxml"
+            "projectName": "SMPUV",
+            "vmArgs": "--module-path \"C:/Users/wmike69/Documents/javafx-sdk-19.0.2.1/lib\" --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path /home/luisalonso/Documentos/JavaDepencencies/javafx-sdk-19.0.2.1/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"C:/Users/wmike69/Documents/javafx-sdk-19.0.2.1/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

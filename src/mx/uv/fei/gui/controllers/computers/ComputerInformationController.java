@@ -2,6 +2,8 @@ package mx.uv.fei.gui.controllers.computers;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import mx.uv.fei.logic.domain.Mark;
 import mx.uv.fei.logic.exceptions.DataRetrievalException;
 
 public class ComputerInformationController {
+    private static final Logger LOGGER = Logger.getLogger(ComputerInformationController.class.getName());
     private GuiComputersController guiComputersController;
 
     @FXML
@@ -75,9 +78,11 @@ public class ComputerInformationController {
             stage.setScene(scene);
 
             stage.show();
-        } catch (IOException exception) {
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

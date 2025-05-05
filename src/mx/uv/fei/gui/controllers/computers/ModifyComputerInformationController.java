@@ -3,6 +3,9 @@ package mx.uv.fei.gui.controllers.computers;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import mx.uv.fei.gui.AlertPopUpGenerator;
@@ -27,6 +31,7 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class ModifyComputerInformationController {
+    private static final Logger LOGGER = Logger.getLogger(ModifyComputerInformationController.class.getName());
     private ComputerInformationController computerInformationController;
     private GuiComputersController guiComputersController;
 
@@ -69,6 +74,7 @@ public class ModifyComputerInformationController {
         try {
             markComboBox.getItems().addAll(markDAO.getMarksFromDatabase());
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
 
@@ -113,6 +119,20 @@ public class ModifyComputerInformationController {
         statusComboBox.getItems().add(ComputerStatus.OUT_OF_SERVICE.getValue());
         typeComboBox.getItems().add("Escritorio");
         typeComboBox.getItems().add("Laptop");
+
+        UnaryOperator<TextFormatter.Change> serialNumberTextFieldFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 50) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "El número de serie debe tener 50 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        serialNumberTextField.setTextFormatter(new TextFormatter<>(serialNumberTextFieldFilter));
     }
 
     @FXML
@@ -162,14 +182,17 @@ public class ModifyComputerInformationController {
                 return;
             }
             computerDAO.modifyComputerDataFromDatabase(newComputerData, oldComputerData);
-            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Éxito",
+            new AlertPopUpGenerator().showCustomMessage(AlertType.INFORMATION, "Éxito",
                     "Computadora modificada exitosamente");
             returnToGuiComputers(event);
         } catch (DataRetrievalException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (DataWritingException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         } catch (ConstraintViolationException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al modificar computadora",
                     "El número de serie ya está ocupado");
         }
@@ -289,7 +312,8 @@ public class ModifyComputerInformationController {
             stage.setTitle("SMPUV");
             stage.setScene(scene);
             stage.show();
-        } catch (IllegalStateException | IOException exception) {
+        } catch (IllegalStateException | IOException e) {
+            LOGGER.log(Level.SEVERE, "Something went wrong", e);
             new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
         }
     }

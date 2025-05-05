@@ -1,12 +1,18 @@
 package mx.uv.fei.gui.controllers.refactions;
 
 import java.util.ArrayList;
+import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
@@ -25,6 +31,7 @@ import mx.uv.fei.logic.exceptions.DataRetrievalException;
 import mx.uv.fei.logic.exceptions.DataWritingException;
 
 public class GuiAddRefactionsController {
+    private static final Logger LOGGER = Logger.getLogger(GuiAddRefactionsController.class.getName());
 
     private boolean editing;
 
@@ -49,6 +56,12 @@ public class GuiAddRefactionsController {
     private Spinner<Integer> quantitySpinner;
 
     @FXML
+    Button saveRegisterButton;
+
+    @FXML
+    Label titleLabel;
+
+    @FXML
     public void initialize() throws DataRetrievalException {
         nameTextArea.setWrapText(true);
 
@@ -70,6 +83,61 @@ public class GuiAddRefactionsController {
                 Integer.MAX_VALUE, 0);
         quantitySpinner.setValueFactory(valueFactory);
 
+        UnaryOperator<TextFormatter.Change> codeTextFieldFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 50) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "El código debe tener 50 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        UnaryOperator<TextFormatter.Change> nameTextAreaFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 125) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "El nombre debe tener 125 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        Pattern validDecimalPattern = Pattern.compile("\\d{1,16}(\\.\\d{0,2})?");
+        UnaryOperator<TextFormatter.Change> priceTextFieldFilter = change -> {
+            String newText = change.getControlNewText();
+            if (validDecimalPattern.matcher(newText).matches()) {
+
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "El precio debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
+            }
+
+            return null;
+        };
+
+        TextField quantitySpinnerEditor = quantitySpinner.getEditor();
+        UnaryOperator<TextFormatter.Change> quantitySpinnerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.length() <= 10) {
+                return change;
+            } else {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "La cantidad debe tener 10 caracteres o menos");
+            }
+
+            return null;
+        };
+
+        codeTextField.setTextFormatter(new TextFormatter<>(codeTextFieldFilter));
+        nameTextArea.setTextFormatter(new TextFormatter<>(nameTextAreaFilter));
+        priceTextField.setTextFormatter(new TextFormatter<>(priceTextFieldFilter));
+        quantitySpinnerEditor.setTextFormatter(new TextFormatter<>(quantitySpinnerFilter));
     }
 
     @FXML
@@ -87,18 +155,6 @@ public class GuiAddRefactionsController {
         if (!isValidCode()) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la refaccion",
                     "El código es erróneo");
-            return;
-        }
-
-        if (!isValidName()) {
-            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la refaccion",
-                    "La descripción debe de tener 125 caracteres o menos");
-            return;
-        }
-
-        if (!isValidPrice()) {
-            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la refaccion",
-                    "El precio introducido es erróneo");
             return;
         }
 
@@ -130,10 +186,12 @@ public class GuiAddRefactionsController {
             try {
                 refactionDAO.modifyRefactionToDatabase(refaction, originalRefaction);
             } catch (DataWritingException e) {
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                         "Hubo un error, inténtelo más tarde");
                 return;
             } catch (ConstraintViolationException e) {
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al modificar refacción",
                         "El código ya está usado");
                 return;
@@ -142,10 +200,12 @@ public class GuiAddRefactionsController {
             try {
                 refactionDAO.addRefactionToDatabase(refaction);
             } catch (DataWritingException e) {
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
                         "Hubo un error, inténtelo más tarde");
                 return;
             } catch (ConstraintViolationException e) {
+                LOGGER.log(Level.SEVERE, "Something went wrong", e);
                 new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error al registrar refacción",
                         "El código ya está usado");
                 return;
@@ -158,7 +218,7 @@ public class GuiAddRefactionsController {
         typeChoiceBox.setValue(null);
         priceTextField.setText("");
 
-        new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Éxito", "Registro exitoso");
+        new AlertPopUpGenerator().showCustomMessage(AlertType.INFORMATION, "Éxito", "Registro exitoso");
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -195,13 +255,5 @@ public class GuiAddRefactionsController {
 
     public boolean isValidCode() {
         return codeTextField.getText().trim().matches("^[a-zA-Z0-9_-]+$");
-    }
-
-    public boolean isValidName() {
-        return nameTextArea.getText().length() < 125;
-    }
-
-    public boolean isValidPrice() {
-        return priceTextField.getText().trim().matches("^\\d+(\\.\\d+)?$");
     }
 }
