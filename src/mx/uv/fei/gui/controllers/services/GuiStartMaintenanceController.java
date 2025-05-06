@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +20,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import mx.uv.fei.gui.AlertPopUpGenerator;
 import mx.uv.fei.logic.daos.ServiceDAO;
@@ -76,35 +73,6 @@ public class GuiStartMaintenanceController {
         for (String serviceType : serviceTypes) {
             serviceTypeComboBox.getItems().add(serviceType);
         }
-
-        Pattern validDecimalPattern = Pattern.compile("\\d{1,16}(\\.\\d{0,2})?");
-        UnaryOperator<TextFormatter.Change> costTextFieldFilter = change -> {
-            String newText = change.getControlNewText();
-            if (validDecimalPattern.matcher(newText).matches()) {
-
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "El costo debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
-            }
-
-            return null;
-        };
-
-        UnaryOperator<TextFormatter.Change> diagnosisTextAreaFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 500) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "Las observaciones deben tener 500 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        costTextField.setTextFormatter(new TextFormatter<>(costTextFieldFilter));
-        diagnosisTextArea.setTextFormatter(new TextFormatter<>(diagnosisTextAreaFilter));
     }
 
     @FXML
@@ -129,39 +97,45 @@ public class GuiStartMaintenanceController {
         if (serviceTypeComboBox.getValue() != null) {
             if (startDatePicker.getValue() != null && endDatePicker.getValue() != null) {
                 if (isValidPrice()) {
-                    ServiceDAO serviceDAO = new ServiceDAO();
-                    Service service = new Service();
-                    service.setType(serviceTypeComboBox.getValue());
-                    service.setStartDate(Date.valueOf(startDatePicker.getValue()));
-                    service.setEndDate(Date.valueOf(endDatePicker.getValue()));
-                    service.setDiagnosis(diagnosisTextArea.getText());
-                    service.setStatus(ServiceStatus.ACTIVE.getValue());
+                    if (diagnosisTextArea.getText().length() <= 500) {
+                        ServiceDAO serviceDAO = new ServiceDAO();
+                        Service service = new Service();
+                        service.setType(serviceTypeComboBox.getValue());
+                        service.setStartDate(Date.valueOf(startDatePicker.getValue()));
+                        service.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                        service.setDiagnosis(diagnosisTextArea.getText());
+                        service.setStatus(ServiceStatus.ACTIVE.getValue());
 
-                    BigDecimal price = new BigDecimal(costTextField.getText().trim());
-                    service.setPrice(price);
-                    service.setComputer(computer);
+                        BigDecimal price = new BigDecimal(costTextField.getText().trim());
+                        service.setPrice(price);
+                        service.setComputer(computer);
 
-                    // Add method to validate price is correct
-                    if (serviceDAO.isValidDate(service)) {
-                        try {
-                            if (serviceDAO.addService(service) > 0) {
-                                new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.INFORMATION,
-                                        "Mensaje de éxito", "Mantenimiento programado exitosamente");
+                        if (serviceDAO.isValidDate(service)) {
+                            try {
+                                if (serviceDAO.addService(service) > 0) {
+                                    new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.INFORMATION,
+                                            "Mensaje de éxito", "Mantenimiento programado exitosamente");
 
-                                returnToComputerManager(event);
+                                    returnToComputerManager(event);
+                                }
+                            } catch (DataInsertionException e) {
+                                LOGGER.log(Level.SEVERE, "Something went wrong", e);
+                                new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
+                                        "Hubo un error, inténtelo más tarde");
                             }
-                        } catch (DataInsertionException e) {
-                            LOGGER.log(Level.SEVERE, "Something went wrong", e);
-                            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error",
-                                    "Hubo un error, inténtelo más tarde");
+                        } else {
+                            new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.WARNING,
+                                    "No se puede iniciar mantenimiento", "Favor de seleccionar una fecha válida");
                         }
                     } else {
                         new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.WARNING,
-                                "No se puede iniciar mantenimiento", "Favor de seleccionar una fecha válida");
+                                "No se puede iniciar mantenimiento",
+                                "Las observaciones deben tener 500 caracteres o menos");
                     }
                 } else {
                     new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.WARNING,
-                            "No se puede iniciar mantenimiento", "Favor de ingresar un precio válido");
+                            "No se puede iniciar mantenimiento",
+                            "El precio debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
                 }
             } else {
                 new AlertPopUpGenerator().showCustomMessage(Alert.AlertType.WARNING,
@@ -174,7 +148,7 @@ public class GuiStartMaintenanceController {
     }
 
     public boolean isValidPrice() {
-        return costTextField.getText().trim().matches("^\\d+(\\.\\d+)?$");
+        return costTextField.getText().trim().matches("\\d{1,16}(\\.\\d{0,2})?");
     }
 
     public void setComputer(Computer computer) {

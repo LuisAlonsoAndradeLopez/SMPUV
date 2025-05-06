@@ -3,7 +3,6 @@ package mx.uv.fei.gui.controllers.computers;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import mx.uv.fei.gui.AlertPopUpGenerator;
@@ -119,26 +117,18 @@ public class GuiRegisterComputerController {
         statusComboBox.getItems().add(ComputerStatus.OUT_OF_SERVICE.getValue());
         typeComboBox.getItems().add(ComputerType.DESKTOP.getValue());
         typeComboBox.getItems().add(ComputerType.LAPTOP.getValue());
-
-        UnaryOperator<TextFormatter.Change> serialNumberTextFieldFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 50) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                    "El número de serie debe tener 50 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        serialNumberTextField.setTextFormatter(new TextFormatter<>(serialNumberTextFieldFilter));
     }
 
     @FXML
     private void registerButtonController(ActionEvent event) {
         if (!allFieldsContainsData()) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Error", "Faltan campos por llenar");
+            return;
+        }
+
+        if (serialNumberTextField.getText().length() > 50) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "El número de serie debe tener de 1 a 50 caracteres");
             return;
         }
 
@@ -174,12 +164,7 @@ public class GuiRegisterComputerController {
                         "La computadora ya está registrada en el sistema");
                 return;
             }
-        } catch (DataRetrievalException e) {
-            LOGGER.log(Level.SEVERE, "Something went wrong", e);
-            new AlertPopUpGenerator().showCustomMessage(AlertType.ERROR, "Error", "Hubo un error, inténtelo más tarde");
-        }
 
-        try {
             computerDAO.addComputerToDatabase(computer);
             new AlertPopUpGenerator().showCustomMessage(AlertType.INFORMATION, "Éxito",
                     "Computadora registrada exitosamente");

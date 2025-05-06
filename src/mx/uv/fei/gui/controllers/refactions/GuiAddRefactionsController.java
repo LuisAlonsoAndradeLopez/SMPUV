@@ -1,10 +1,8 @@
 package mx.uv.fei.gui.controllers.refactions;
 
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,62 +80,6 @@ public class GuiAddRefactionsController {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,
                 Integer.MAX_VALUE, 0);
         quantitySpinner.setValueFactory(valueFactory);
-
-        UnaryOperator<TextFormatter.Change> codeTextFieldFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 50) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "El código debe tener 50 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        UnaryOperator<TextFormatter.Change> nameTextAreaFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 125) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "El nombre debe tener 125 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        Pattern validDecimalPattern = Pattern.compile("\\d{1,16}(\\.\\d{0,2})?");
-        UnaryOperator<TextFormatter.Change> priceTextFieldFilter = change -> {
-            String newText = change.getControlNewText();
-            if (validDecimalPattern.matcher(newText).matches()) {
-
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "El precio debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
-            }
-
-            return null;
-        };
-
-        TextField quantitySpinnerEditor = quantitySpinner.getEditor();
-        UnaryOperator<TextFormatter.Change> quantitySpinnerFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 10) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                        "La cantidad debe tener 10 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        codeTextField.setTextFormatter(new TextFormatter<>(codeTextFieldFilter));
-        nameTextArea.setTextFormatter(new TextFormatter<>(nameTextAreaFilter));
-        priceTextField.setTextFormatter(new TextFormatter<>(priceTextFieldFilter));
-        quantitySpinnerEditor.setTextFormatter(new TextFormatter<>(quantitySpinnerFilter));
     }
 
     @FXML
@@ -152,9 +94,33 @@ public class GuiAddRefactionsController {
             return;
         }
 
+        if (codeTextField.getText().length() > 50) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "El código debe tener de 1 a 50 caracteres");
+            return;
+        }
+        
         if (!isValidCode()) {
             new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la refaccion",
-                    "El código es erróneo");
+            "El código es erróneo");
+            return;
+        }
+        
+        if (nameTextArea.getText().length() > 125) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+            "El nombre debe tener de 1 a 125 caracteres");
+            return;
+        }
+
+        if (!isValidPrice()) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "El precio debe tener de 1 a 16 caracteres antes del punto, y maximo 2 números después del punto");
+            return;
+        }
+
+        if (quantitySpinner.getEditor().getText().length() > 10) {
+            new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                    "La cantidad debe tener de 1 a 10 caracteres");
             return;
         }
 
@@ -255,5 +221,9 @@ public class GuiAddRefactionsController {
 
     public boolean isValidCode() {
         return codeTextField.getText().trim().matches("^[a-zA-Z0-9_-]+$");
+    }
+
+    public boolean isValidPrice() {
+        return priceTextField.getText().trim().matches("^\\d{1,16}(\\.\\d{0,2})?$");
     }
 }

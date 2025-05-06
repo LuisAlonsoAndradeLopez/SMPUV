@@ -3,7 +3,6 @@ package mx.uv.fei.gui.controllers.computers;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +16,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import mx.uv.fei.gui.AlertPopUpGenerator;
@@ -119,20 +117,6 @@ public class ModifyComputerInformationController {
         statusComboBox.getItems().add(ComputerStatus.OUT_OF_SERVICE.getValue());
         typeComboBox.getItems().add("Escritorio");
         typeComboBox.getItems().add("Laptop");
-
-        UnaryOperator<TextFormatter.Change> serialNumberTextFieldFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.length() <= 50) {
-                return change;
-            } else {
-                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
-                    "El número de serie debe tener 50 caracteres o menos");
-            }
-
-            return null;
-        };
-
-        serialNumberTextField.setTextFormatter(new TextFormatter<>(serialNumberTextFieldFilter));
     }
 
     @FXML
@@ -146,6 +130,12 @@ public class ModifyComputerInformationController {
         try {
             if (!allFieldsContainsData()) {
                 new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "Error", "Faltan campos por llenar");
+                return;
+            }
+
+            if (serialNumberTextField.getText().length() > 50) {
+                new AlertPopUpGenerator().showCustomMessage(AlertType.WARNING, "No se puede registrar la computadora",
+                        "El número de serie debe tener de 1 a 50 caracteres");
                 return;
             }
 
